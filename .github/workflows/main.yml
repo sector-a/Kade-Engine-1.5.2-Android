@@ -47,6 +47,7 @@ jobs:
           haxelib install hxcpp > /dev/null
           haxelib install lime
           haxelib install openfl
+          haxelib install polymod
           haxelib --never install flixel
           haxelib run lime setup flixel
           haxelib install flixel-ui
