@@ -24,9 +24,7 @@ import lime.utils.Assets;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.input.FlxKeyManager;
-#if mobileC
-import ui.Mobilecontrols;
-#end
+import ui.FlxVirtualPad;
 
 using StringTools;
 
@@ -53,6 +51,8 @@ class KeyBindMenu extends FlxSubState
 
     var state:String = "select";
 
+	  var _pad:FlxVirtualPad;
+	  
 	override function create()
 	{	
 
@@ -96,11 +96,11 @@ class KeyBindMenu extends FlxSubState
         OptionsMenu.instance.acceptInput = false;
 
         textUpdate();
-
-		#if mobileC
-		addVirtualPad(UP_DOWN, A);
-		#end
 		
+			_pad = new FlxVirtualPad(NONE, A);
+    	_pad.alpha = 0.75;
+    	this.add(_pad);
+    	
 		super.create();
 	}
 
@@ -126,7 +126,7 @@ class KeyBindMenu extends FlxSubState
                     FlxG.sound.play(Paths.sound('scrollMenu'));
                     state = "input";
                 }
-                else if(FlxG.keys.justPressed.ESCAPE || controls.ACCEPT){
+                else if(FlxG.keys.justPressed.ESCAPE || _pad.buttonA.justPressed){
                     quit();
                 }
 				else if (FlxG.keys.justPressed.BACKSPACE){
@@ -140,7 +140,7 @@ class KeyBindMenu extends FlxSubState
                 state = "waiting";
 
             case "waiting":
-                if(FlxG.keys.justPressed.ESCAPE || controls.ACCEPT){
+                if(FlxG.keys.justPressed.ESCAPE || _pad.buttonA.justPressed){
                     keys[curSelected] = tempKey;
                     state = "select";
                     FlxG.sound.play(Paths.sound('confirmMenu'));
