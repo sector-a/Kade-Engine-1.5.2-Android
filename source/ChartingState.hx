@@ -949,7 +949,6 @@ class ChartingState extends MusicBeatState
 			changeSection(curSection + shiftThing);
 		if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A || _pad.buttonLeft.justPressed)
 					changeSection(curSection - shiftThing);
-			}	
 			if (FlxG.keys.justPressed.SPACE || key_space.justPressed)
 			{
 				if (FlxG.sound.music.playing)
