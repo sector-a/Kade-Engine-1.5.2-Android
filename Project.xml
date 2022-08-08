@@ -122,8 +122,7 @@
 	<haxelib name="hxCodec" if="desktop || android" />
 	<haxelib name="extension-androidtools" />
 	<haxelib name="newgrounds" unless='mobile' />
-	<haxelib name="faxe" if='switch'/>
-	<haxelib name="polymod"/>
+	<haxelib name="faxe" if='switch' />
 	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit" />
 
