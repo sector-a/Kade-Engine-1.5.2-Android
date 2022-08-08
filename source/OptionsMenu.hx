@@ -40,16 +40,12 @@ class OptionsMenu extends MusicBeatState
 			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
 		]),
 		new OptionCategory("Appearance", [
-			#if desktop
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
 			new SongPositionOption("Show the songs current position (as a bar)"),
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
-			#else
-			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay.")
-			#end
+			new CpuStrums("CPU's strumline lights up when a note hits it.")
 		]),
 		
 		new OptionCategory("Misc", [
@@ -113,7 +109,7 @@ class OptionsMenu extends MusicBeatState
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
 
 		#if mobileC
-		addVirtualPad(UP_DOWN, A_B);
+		addVirtualPad(FULL, A_B);
 		#end
 		
 		super.create();
