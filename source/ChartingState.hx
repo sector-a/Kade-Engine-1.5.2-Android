@@ -36,7 +36,6 @@ import openfl.events.IOErrorEvent;
 import openfl.media.Sound;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
-import ui.FlxVirtualPad;
 
 using StringTools;
 
@@ -99,12 +98,6 @@ class ChartingState extends MusicBeatState
 
 	public var snapText:FlxText;
 
-	//add buttons
-	var key_space:FlxButton;
-	var key_shift:FlxButton;
-
-	var _pad:FlxVirtualPad;
-	
 	override function create()
 	{
 		curSection = lastSection;
@@ -208,20 +201,7 @@ class ChartingState extends MusicBeatState
 		add(blackBorder);
 		add(snapText);
 
-		// add buttons
-		key_space = new FlxButton(60, 60, "");
-        key_space.loadGraphic(Paths.image("key_space")); //"assets/images/key_space.png"
-        key_space.alpha = 0.75;
-        add(key_space);
 
-        key_shift = new FlxButton(60, 200, "");
-        key_shift.loadGraphic(Paths.image("key_shift")); //"assets/images/key_shift.png"
-        key_shift.alpha = 0.75;
-        add(key_shift);
-
-		_pad = new FlxVirtualPad(RIGHT_FULL, NONE);
-    	_pad.alpha = 0.75;
-    	this.add(_pad);
 
 		super.create();
 	}
@@ -880,19 +860,13 @@ class ChartingState extends MusicBeatState
 			&& FlxG.mouse.y < gridBG.y + (GRID_SIZE * _song.notes[curSection].lengthInSteps))
 		{
 			dummyArrow.x = Math.floor(FlxG.mouse.x / GRID_SIZE) * GRID_SIZE;
-			if (key_shift.pressed) //FlxG.keys.pressed.SHIFT
+			if (FlxG.keys.pressed.SHIFT)
 				dummyArrow.y = FlxG.mouse.y;
 			else
 				dummyArrow.y = Math.floor(FlxG.mouse.y / GRID_SIZE) * GRID_SIZE;
 		}
 
-		#if android
-		var androidback = FlxG.android.justReleased.BACK;
-		#else
-		var androidback = false;
-		#end
-
-		if (FlxG.keys.justPressed.ENTER || androidback)
+		if (FlxG.keys.justPressed.ENTER)
 		{
 			lastSection = curSection;
 
@@ -913,7 +887,7 @@ class ChartingState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.TAB)
 		{
-			if (FlxG.keys.pressed.SHIFT || key_shift.pressed)
+			if (FlxG.keys.pressed.SHIFT)
 			{
 				UI_box.selected_tab -= 1;
 				if (UI_box.selected_tab < 0)
@@ -943,14 +917,16 @@ class ChartingState extends MusicBeatState
 			}
 
 			var shiftThing:Int = 1;
-    if (FlxG.keys.pressed.SHIFT || key_shift.pressed)
-			shiftThing = 4;
-		if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D || _pad.buttonRight.justPressed)
-			changeSection(curSection + shiftThing);
-		if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A || _pad.buttonLeft.justPressed)
+			if (FlxG.keys.pressed.SHIFT)
+				shiftThing = 4;
+			if (!FlxG.keys.pressed.CONTROL)
+			{
+				if (FlxG.keys.justPressed.RIGHT || FlxG.keys.justPressed.D)
+					changeSection(curSection + shiftThing);
+				if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A)
 					changeSection(curSection - shiftThing);
 			}	
-			if (FlxG.keys.justPressed.SPACE || key_space.justPressed)
+			if (FlxG.keys.justPressed.SPACE)
 			{
 				if (FlxG.sound.music.playing)
 				{
@@ -967,7 +943,7 @@ class ChartingState extends MusicBeatState
 
 			if (FlxG.keys.justPressed.R)
 			{
-				if (FlxG.keys.pressed.SHIFT || key_shift.pressed)
+				if (FlxG.keys.pressed.SHIFT)
 					resetSection(true);
 				else
 					resetSection();
@@ -997,9 +973,9 @@ class ChartingState extends MusicBeatState
 				vocals.time = FlxG.sound.music.time;
 			}
 
-			if (!FlxG.keys.pressed.SHIFT || !key_shift.pressed)
+			if (!FlxG.keys.pressed.SHIFT)
 			{
-				if (FlxG.keys.pressed.W || FlxG.keys.pressed.S || _pad.buttonUp.pressed || _pad.buttonDown.pressed)
+				if (FlxG.keys.pressed.W || FlxG.keys.pressed.S)
 				{
 					FlxG.sound.music.pause();
 					vocals.pause();
@@ -1019,7 +995,7 @@ class ChartingState extends MusicBeatState
 			}
 			else
 			{
-				if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.S || _pad.buttonUp.pressed || _pad.buttonDown.pressed)
+				if (FlxG.keys.justPressed.W || FlxG.keys.justPressed.S)
 				{
 					FlxG.sound.music.pause();
 					vocals.pause();
