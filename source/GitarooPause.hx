@@ -47,12 +47,16 @@ class GitarooPause extends MusicBeatState
 
 		changeThing();
 
+		#if mobileC
+		addVirtualPad(UP_DOWN, A);
+		#end
+
 		super.create();
 	}
 
 	override function update(elapsed:Float)
 	{
-		if (controls.LEFT_P || controls.RIGHT_P)
+		if (controls.UP_P || controls.DOWN_P)
 			changeThing();
 
 		if (controls.ACCEPT)
