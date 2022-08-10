@@ -227,30 +227,6 @@ class PlayState extends MusicBeatState
 	{
 		instance = this;
 		
-		function playCutscene(name:String, atEndOfSong:Bool = false)
-    {
-	        inCutscene = true;
-        	FlxG.sound.music.stop();
-
-	        var video:VideoHandler = new VideoHandler();
-	        video.finishCallback = function()
-        	{
-		            if (atEndOfSong)
-	               	{
-		                	if (storyPlaylist.length <= 0)
-				              FlxG.switchState(new StoryMenuState());
-		                  	else
-		                  	{
-				                  SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
-			                   FlxG.switchState(new PlayState());
-			                }
-		              }
-		              else
-			            startCountdown();
-	       }
-	       video.playVideo(Paths.video(name));
-    }
-		
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(800);
 		
@@ -1114,6 +1090,30 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
+
+        function playCutscene(name:String, atEndOfSong:Bool = false)
+        {
+	        inCutscene = true;
+        	FlxG.sound.music.stop();
+
+	        var video:VideoHandler = new VideoHandler();
+	        video.finishCallback = function()
+        	{
+		            if (atEndOfSong)
+	               	{
+		                	if (storyPlaylist.length <= 0)
+				              FlxG.switchState(new StoryMenuState());
+		                  	else
+		                  	{
+				                  SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+			                   FlxG.switchState(new PlayState());
+			                }
+		              }
+		              else
+			            startCountdown();
+	       }
+	       video.playVideo(Paths.video(name));
+        }
 
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
