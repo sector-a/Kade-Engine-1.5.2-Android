@@ -119,8 +119,6 @@
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
-	<haxelib name="hxCodec" if="desktop || android" />
-	<haxelib name="extension-androidtools" />
 	<haxelib name="newgrounds" unless='mobile' />
 	<haxelib name="faxe" if='switch' />
 	<haxelib name="discord_rpc" if="windows"/>
